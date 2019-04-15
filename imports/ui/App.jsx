@@ -21,10 +21,10 @@ class App extends Component {
     }
     return filteredTasks.map((task) => {
       const currentUserId = this.props.currentUser && this.props.currentUser._id
-      const showPrivateButton = task.owner === currentUserId
+      const canEditTask = task.owner === currentUserId
       
       return(
-        <Task key={ task._id } task={ task } showPrivateButton={ showPrivateButton } />
+        <Task key={ task._id } task={ task } canEditTask={ canEditTask } />
       )
     })
   }

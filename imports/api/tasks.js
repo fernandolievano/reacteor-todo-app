@@ -33,7 +33,7 @@ Meteor.methods({
   'tasks.remove'(taskId) {
     check (taskId, String)
 
-    const task = Task.findOne(taskId)
+    const task = Tasks.findOne(taskId)
     if (task.private && task.owner !== this.userId) {
       throw new Meteor.Error('not-authorized')
     }
@@ -44,7 +44,7 @@ Meteor.methods({
     check(taskId, String)
     check(setChecked, Boolean)
 
-    const task = Task.findOne(taskId)
+    const task = Tasks.findOne(taskId)
     if (task.private && task.owner !== this.userId) {
       throw new Meteor.Error('not-authorized')
     }

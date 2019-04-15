@@ -24,25 +24,35 @@ export default class Task extends Component {
       checked: this.props.task.checked,
       private: this.props.task.private
     })
+    const currentUserId = this.props.currentUser && this.props.currentUser._id
+    const canEditTask = this.props.task.owner === currentUserId
 
     return (
       <li className={ taskClassName }>
-        <button className="delete" onClick={this.deleteThisTask.bind(this)}>
-          &times;
-        </button>
-
-        <input 
-          type="checkbox" 
-          readOnly 
-          checked={!!this.props.task.checked} 
-          onClick={this.toggleChecked.bind(this)}
-        />
-
-        { this.props.showPrivateButton ? 
-          <button className="toggle-private" onClick={this.togglePrivate.bind(this)}>
-            { this.props.task.private ? 'Private' : 'Public' }
-          </button>
-        : '' }
+        { 
+          this.props.canEditTask ?
+            <button className="delete" onClick={this.deleteThisTask.bind(this)}>
+              &times;
+            </button>
+          : ''
+        }
+        {
+          this.props.canEditTask ?
+            <input 
+              type="checkbox" 
+              readOnly 
+              checked={!!this.props.task.checked} 
+              onClick={this.toggleChecked.bind(this)}
+            />
+          : '' 
+        }
+        { 
+          this.props.canEditTask ? 
+            <button className="toggle-private" onClick={this.togglePrivate.bind(this)}>
+              { this.props.task.private ? 'Private' : 'Public' }
+            </button>
+          : '' 
+        }
 
         <span className="text">
           <strong>{this.props.task.username}</strong>: { this.props.task.text }
